@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FFD93D">
+<meta name="description" content="Situs pribadi sedang dalam perbaikan dan update. Segera kembali dengan tampilan yang lebih rapi.">
+<title>Alianw — Sedang Maintenance</title>
+
+<!--
+  ============================================================
+  HALAMAN MAINTENANCE PRIBADI — NEOBRUTALISM
+  ------------------------------------------------------------
+  Ganti data berikut sesuai punyamu:
+  • "Namakamu"           → nama kamu (title, footer, sosial)
+  • "halo@namakamu.dev"  → email (tombol salin + tombol email)
+  • "username"           → link GitHub / Instagram / LinkedIn
+  • Tanggal rilis        → cari "GANTI TANGGAL RILIS" di bagian script
+  Semua style & animasi ada di dalam file ini (tanpa build tool).
+  ============================================================
+-->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%A7%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+  /* ============================================================
+     1. TOKENS & RESET
+     ============================================================ */
+  :root{
+    --ink:#111111;
+    --bg:#FFD93D;
+    --paper:#FFFBF0;
+    --pink:#FF7BAC;
+    --blue:#7DD3FC;
+    --lime:#BDF56F;
+    --lilac:#C9B8FF;
+    --orange:#FF9F45;
+
+    --shadow-sm:3px 3px 0 var(--ink);
+    --shadow:8px 8px 0 var(--ink);
+    --shadow-lg:12px 12px 0 var(--ink);
+
+    --font-display:"Archivo Black","Arial Black",Impact,sans-serif;
+    --font-body:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --font-mono:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:var(--font-body);
+    color:var(--ink);
+    background-color:var(--bg);
+    background-image:
+      linear-gradient(to right, rgba(17,17,17,.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17,17,17,.07) 1px, transparent 1px);
+    background-size:44px 44px;
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%}
+  button{font:inherit;color:inherit}
+  a{color:inherit}
+  ::selection{background:var(--ink);color:var(--bg)}
+  :focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+  /* ============================================================
+     2. UTILITIES
+     ============================================================ */
+  .wrap{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+  .skip-link{
+    position:fixed;top:12px;left:12px;z-index:1000;
+    transform:translateY(-200%);
+    background:var(--ink);color:var(--bg);
+    padding:10px 16px;border:3px solid var(--bg);border-radius:8px;
+    font-family:var(--font-mono);font-weight:700;font-size:13px;
+    text-decoration:none;transition:transform .2s ease;
+  }
+  .skip-link:focus{transform:translateY(0)}
+
+  .js .reveal{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
+    transition-delay:var(--d,0s);
+  }
+  .js .reveal.in{opacity:1;transform:none}
+
+  .kicker{
+    display:inline-block;
+    margin-bottom:16px;
+    padding:5px 9px;
+    background:var(--paper);
+    border:2px solid var(--ink);
+    border-radius:6px;
+    box-shadow:var(--shadow-sm);
+    font-family:var(--font-mono);
+    font-size:11px;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;
+    line-height:1.3;
+  }
+
+  .hl{
+    display:inline-block;
+    padding:.02em .1em .05em;
+    background:var(--pink);
+    border:3px solid var(--ink);
+    box-shadow:5px 5px 0 var(--ink);
+    transform:rotate(-1.4deg);
+    line-height:1;
+  }
+  .hl-lime{background:var(--lime)}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    padding:14px 22px;
+    background:var(--paper);color:var(--ink);
+    border:3px solid var(--ink);border-radius:12px;
+    box-shadow:5px 5px 0 var(--ink);
+    font-family:var(--font-body);font-weight:700;font-size:15px;
+    text-decoration:none;cursor:pointer;
+    transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+  }
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+  .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+  .btn-primary{background:var(--ink);color:var(--bg)}
+  .btn-secondary:hover{background:var(--blue)}
+
+  .track{
+    position:relative;height:16px;
+    background:#fff;
+    border:3px solid var(--ink);border-radius:8px;
+    overflow:hidden;
+  }
+  .fill{
+    width:0;height:100%;
+    background-color:var(--c,var(--pink));
+    background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.18) 0 8px,transparent 8px 16px);
+    background-size:22.63px 22.63px;
+    border-radius:4px;
+    transition:width 1.3s cubic-bezier(.22,1,.36,1) .15s;
+    animation:stripes 1.2s linear infinite;
+  }
+  .in .fill{width:var(--p,68%)}
+
+  .hazard{
+    height:34px;
+    border-top:4px solid var(--ink);
+    border-bottom:4px solid var(--ink);
+    background-image:repeating-linear-gradient(45deg,var(--ink) 0 16px,var(--bg) 16px 32px);
+    background-size:22.63px 22.63px;
+    animation:hazard 1.2s linear infinite;
+  }
+
+  /* ============================================================
+     3. TICKER
+     ============================================================ */
+  .topbar{position:relative;z-index:5}
+  .ticker{
+    background:var(--ink);color:var(--bg);
+    border-bottom:4px solid var(--ink);
+    padding:10px 0;overflow:hidden;
+  }
+  .ticker-track{
+    display:flex;width:max-content;
+    animation:marquee 24s linear infinite;
+  }
+  .ticker-group{
+    display:flex;align-items:center;gap:26px;
+    padding-right:26px;white-space:nowrap;
+    font-family:var(--font-mono);font-weight:700;
+    font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  }
+  .ticker-group .sep{color:var(--pink);font-size:14px}
+
+  /* ============================================================
+     4. HERO
+     ============================================================ */
+  .hero{
+    display:grid;
+    grid-template-columns:1.04fr .96fr;
+    gap:clamp(32px,5vw,64px);
+    align-items:center;
+    padding-block:clamp(44px,6vw,84px);
+  }
+  .hero > *{min-width:0}
+  .status-pill{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:8px 15px;
+    background:var(--paper);
+    border:3px solid var(--ink);border-radius:999px;
+    box-shadow:4px 4px 0 var(--ink);
+    font-family:var(--font-mono);font-size:11.5px;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;
+    transform:rotate(-1deg);
+  }
+  .dot{
+    width:11px;height:11px;flex:none;
+    background:#FF4D4D;
+    border:2px solid var(--ink);border-radius:50%;
+    animation:pulse-dot 1.6s ease-in-out infinite;
+  }
+
+  .hero h1{
+    margin:20px 0 0;
+    font-family:var(--font-display);
+    font-size:clamp(2.8rem,7.2vw,5.6rem);
+    line-height:.94;letter-spacing:-.03em;text-transform:uppercase;
+    text-wrap:balance;
+  }
+  .hero h1 .mark{
+    display:inline-block;
+    padding:.02em .1em .05em;
+    background:var(--pink);
+    border:3px solid var(--ink);
+    box-shadow:6px 6px 0 var(--ink);
+    transform:rotate(-1.6deg);
+    line-height:1;
+  }
+  .lead{
+    max-width:52ch;
+    margin:26px 0 0;
+    font-size:clamp(15px,1.5vw,17.5px);
+    line-height:1.7;color:#2f2f2f;
+  }
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+  .hero-stats{
+    display:flex;flex-wrap:wrap;gap:18px 26px;
+    margin:32px 0 0;padding-top:24px;
+    border-top:3px dashed rgba(17,17,17,.25);
+    font-family:var(--font-mono);
+  }
+  .hero-stats div{border-left:3px solid var(--ink);padding-left:12px}
+  .hero-stats dt{
+    font-size:9.5px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:#444;
+  }
+  .hero-stats dd{
+    margin:3px 0 0;
+    font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .hero-art{
+    --mx:0;--my:0;
+    position:relative;
+    padding:26px 22px 44px 18px;
+    z-index:1;
+  }
+  .terminal{
+    position:relative;z-index:1;
+    background:var(--paper);
+    border:4px solid var(--ink);border-radius:18px;
+    box-shadow:var(--shadow-lg);
+    overflow:hidden;
+    transform:translate3d(calc(var(--mx) * 1px),calc(var(--my) * 1px),0) rotate(1.6deg);
+    transition:transform .18s ease-out;
+  }
+  .term-bar{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:10px 14px;
+    background:var(--ink);color:var(--paper);
+    font-family:var(--font-mono);font-size:11px;
+  }
+  .dots{display:flex;gap:6px;flex:none}
+  .dots i{width:11px;height:11px;border-radius:50%;display:block}
+  .dots i:nth-child(1){background:#FF5F57}
+  .dots i:nth-child(2){background:#FEBC2E}
+  .dots i:nth-child(3){background:#28C840}
+  .term-title{
+    letter-spacing:.06em;opacity:.85;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .term-live{
+    display:inline-flex;align-items:center;gap:5px;flex:none;
+    color:var(--lime);font-size:9.5px;font-weight:700;letter-spacing:.12em;
+  }
+  .term-live::before{
+    content:"";width:6px;height:6px;border-radius:50%;
+    background:var(--lime);animation:blink 1.4s steps(1) infinite;
+  }
+  .term-body{
+    display:grid;gap:2px;
+    padding:18px 18px 14px;
+    font-family:var(--font-mono);font-size:12.5px;line-height:1.9;
+    background:var(--paper);
+  }
+  .term-body p{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .c-prompt{color:#E11D48;font-weight:700}
+  .c-out{color:#3b3b3b}
+  .c-out strong{color:var(--ink);letter-spacing:.02em}
+  .chip{
+    display:inline-block;
+    padding:1px 7px;margin-left:2px;
+    border:2px solid var(--ink);border-radius:6px;
+    box-shadow:2px 2px 0 var(--ink);
+    font-size:9.5px;font-weight:700;letter-spacing:.05em;
+    line-height:1.5;vertical-align:1px;
+  }
+  .chip-ok{background:var(--lime)}
+  .chip-work{background:var(--orange)}
+  .chip-wait{background:var(--lilac)}
+  .typed-line{min-height:1.9em}
+  .caret{
+    display:inline-block;width:8px;height:14px;margin-left:2px;
+    background:var(--ink);vertical-align:-2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  .term-progress{
+    padding:14px 18px 18px;
+    background:#FFF4D6;
+    border-top:3px solid var(--ink);
+    font-family:var(--font-mono);
+  }
+  .term-progress-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    margin-bottom:8px;
+    font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  }
+  .term-progress-head b{font-size:12px}
+  .term-progress .track{height:18px}
+
+  .sticker{
+    position:absolute;z-index:4;
+    display:grid;place-items:center;
+    border:3px solid var(--ink);border-radius:14px;
+    box-shadow:5px 5px 0 var(--ink);
+  }
+  .sticker-wrench{
+    top:2px;left:-4px;width:64px;height:64px;
+    background:var(--pink);font-size:28px;
+    animation:float-wrench 5s ease-in-out infinite;
+  }
+  .sticker-cone{
+    bottom:-16px;left:34px;width:70px;height:70px;
+    background:var(--orange);font-size:32px;
+    animation:float-cone 6s ease-in-out infinite .8s;
+  }
+  .error-chip{
+    position:absolute;top:4px;right:6px;z-index:4;
+    padding:6px 10px;
+    background:var(--lime);
+    border:3px solid var(--ink);border-radius:8px;
+    box-shadow:4px 4px 0 var(--ink);
+    font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;
+    transform:rotate(3deg);
+  }
+
+  .soon-badge{
+    position:absolute;z-index:5;
+    bottom:-74px;right:-8px;
+    width:140px;height:140px;
+    padding:0;border:0;border-radius:50%;
+    background:none;cursor:pointer;
+    transform:translate3d(calc(var(--mx) * -1px),calc(var(--my) * -1px),0) rotate(7deg);
+    transition:transform .18s ease-out,scale .2s ease;
+    filter:drop-shadow(6px 6px 0 rgba(17,17,17,.9));
+  }
+  .soon-badge:hover{scale:1.05}
+  .soon-badge:active{scale:.95}
+  .soon-badge:focus-visible{outline:3px solid var(--ink);outline-offset:8px}
+  .soon-badge .ring{
+    width:100%;height:100%;
+    transform-origin:center;
+    animation:spin 22s linear infinite;
+  }
+  .badge-core{
+    position:absolute;top:50%;left:50%;
+    width:56px;height:56px;
+    display:grid;place-items:center;
+    background:var(--bg);
+    border:3px solid var(--ink);border-radius:50%;
+    box-shadow:3px 3px 0 var(--ink);
+    font-size:24px;
+    transform:translate(-50%,-50%);
+  }
+  .spark{
+    position:absolute;left:50%;top:50%;z-index:10;
+    width:10px;height:10px;
+    border:2px solid var(--ink);border-radius:50%;
+    pointer-events:none;
+    animation:spark .95s cubic-bezier(.16,.84,.44,1) forwards;
+  }
+
+  /* ============================================================
+     5. PROGRESS / WORK CARDS
+     ============================================================ */
+  .work{padding-block:clamp(56px,7vw,84px)}
+  .sec-head{
+    display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+    gap:20px 40px;margin-bottom:34px;
+  }
+  .sec-head h2{
+    margin:0;
+    font-family:var(--font-display);
+    font-size:clamp(2rem,4.2vw,2.9rem);
+    line-height:1;letter-spacing:-.02em;text-transform:uppercase;
+    text-wrap:balance;
+  }
+  .sec-head > p{
+    max-width:38ch;margin:0 0 4px;
+    font-size:14.5px;line-height:1.7;color:#333;
+  }
+  .work-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .work-card{
+    position:relative;
+    display:flex;flex-direction:column;
+    padding:26px 24px 22px;
+    background:var(--paper);
+    border:4px solid var(--ink);border-radius:18px;
+    box-shadow:var(--shadow);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .work-card:hover{transform:translate(-4px,-4px);box-shadow:12px 12px 0 var(--ink)}
+  .wc-num{
+    position:absolute;top:16px;right:20px;
+    font-family:var(--font-display);font-size:42px;line-height:1;
+    color:transparent;-webkit-text-stroke:2px rgba(17,17,17,.16);
+    pointer-events:none;user-select:none;
+  }
+  .wc-icon{
+    width:58px;height:58px;margin-bottom:18px;
+    display:grid;place-items:center;
+    background:var(--c,var(--pink));
+    border:3px solid var(--ink);border-radius:12px;
+    box-shadow:4px 4px 0 var(--ink);
+    font-size:27px;
+    transform:rotate(-4deg);
+  }
+  .work-card h3{
+    margin:0 0 8px;
+    font-family:var(--font-display);font-size:18px;line-height:1.2;
+    letter-spacing:-.01em;text-transform:uppercase;
+  }
+  .work-card > p{
+    margin:0 0 22px;
+    font-size:14px;line-height:1.65;color:#3a3a3a;
+  }
+  .wc-foot{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    margin-top:auto;margin-bottom:9px;
+    font-family:var(--font-mono);font-size:10px;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;
+  }
+  .wc-foot .wc-note{color:#666;text-align:right}
+  .work-card .track{height:15px}
+
+  /* ============================================================
+     6. PANEL: COUNTDOWN + KONTAK
+     ============================================================ */
+  .panel-section{padding-block:14px clamp(56px,7vw,84px)}
+  .panel{
+    display:grid;grid-template-columns:1fr 1fr;
+    background:var(--paper);
+    border:4px solid var(--ink);border-radius:24px;
+    box-shadow:var(--shadow-lg);
+    overflow:hidden;
+  }
+  .panel-left{
+    padding:clamp(26px,4vw,46px);
+    background-color:var(--lilac);
+    background-image:radial-gradient(rgba(17,17,17,.14) 1.5px,transparent 1.5px);
+    background-size:18px 18px;
+    border-right:4px solid var(--ink);
+  }
+  .panel-right{padding:clamp(26px,4vw,46px)}
+  .panel h2{
+    margin:0;
+    font-family:var(--font-display);
+    font-size:clamp(1.6rem,3vw,2.35rem);
+    line-height:1.02;letter-spacing:-.02em;text-transform:uppercase;
+    text-wrap:balance;
+  }
+  .panel-right h2{margin-bottom:12px}
+  .panel-right > p{
+    margin:0;font-size:14.5px;line-height:1.7;color:#333;max-width:42ch;
+  }
+
+  .countdown{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+    margin-top:24px;
+  }
+  .cd-box{
+    padding:12px 4px 10px;
+    background:var(--paper);
+    border:3px solid var(--ink);border-radius:12px;
+    box-shadow:4px 4px 0 var(--ink);
+    text-align:center;
+  }
+  .cd-box b{
+    display:block;
+    font-family:var(--font-display);
+    font-size:clamp(1.45rem,3.2vw,2.1rem);
+    line-height:1;font-weight:400;
+    font-variant-numeric:tabular-nums;
+  }
+  .cd-box span{
+    display:block;margin-top:7px;
+    font-family:var(--font-mono);font-size:9px;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;color:#444;
+  }
+  .cd-box.pulse{animation:pop .35s ease}
+  .panel-note{
+    margin:16px 0 0;
+    font-family:var(--font-mono);font-size:10.5px;line-height:1.6;
+    color:#2e2e2e;
+  }
+  .panel-note::before{content:"▸ ";font-weight:700}
+
+  .email-btn{
+    width:100%;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    margin-top:24px;padding:14px 16px;
+    background:#fff;color:var(--ink);
+    border:3px solid var(--ink);border-radius:12px;
+    box-shadow:5px 5px 0 var(--ink);
+    font-family:var(--font-mono);font-size:13.5px;font-weight:700;
+    text-align:left;cursor:pointer;
+    transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+  }
+  .email-btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+  .email-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .email-btn.copied{background:var(--lime)}
+  .copy-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .copy-icon{flex:none;font-size:16px}
+  .copy-hint{
+    margin:9px 0 0;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.03em;color:#555;
+  }
+  .socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .social{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:8px 12px;
+    background:var(--paper);
+    border:3px solid var(--ink);border-radius:9px;
+    box-shadow:var(--shadow-sm);
+    font-size:12.5px;font-weight:700;text-decoration:none;
+    transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+  }
+  .social:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);background:var(--blue)}
+  .social:nth-child(2):hover{background:var(--pink)}
+  .social:nth-child(3):hover{background:var(--lime)}
+
+  /* ============================================================
+     7. FOOTER & TOAST
+     ============================================================ */
+  footer{
+    background:var(--ink);color:var(--bg);
+    border-top:4px solid var(--ink);
+  }
+  .foot-in{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    gap:16px 26px;padding-block:26px;
+  }
+  .foot-in p{
+    margin:0;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;
+    line-height:1.7;text-transform:uppercase;
+  }
+  .foot-in .muted{color:#A8A8A8;text-transform:none;letter-spacing:.02em}
+  .clock-wrap{display:inline-flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+  .live-dot{
+    width:8px;height:8px;flex:none;border-radius:50%;
+    background:var(--lime);animation:blink 1.4s steps(1) infinite;
+  }
+  #clock{color:var(--lime);font-weight:700;letter-spacing:.08em}
+  .to-top{
+    padding:8px 12px;
+    background:transparent;color:var(--bg);
+    border:2px solid var(--bg);border-radius:7px;
+    font-family:var(--font-mono);font-size:10.5px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+    transition:background .15s ease,color .15s ease;
+  }
+  .to-top:hover{background:var(--bg);color:var(--ink)}
+  .to-top:focus-visible{outline-color:var(--bg)}
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;z-index:1001;
+    padding:12px 18px;
+    background:var(--lime);color:var(--ink);
+    border:3px solid var(--ink);border-radius:10px;
+    box-shadow:6px 6px 0 var(--ink);
+    font-size:13px;font-weight:700;
+    opacity:0;pointer-events:none;
+    transform:translate(-50%,18px);
+    transition:opacity .25s ease,transform .25s ease;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* ============================================================
+     8. KEYFRAMES
+     ============================================================ */
+  @keyframes marquee{to{transform:translateX(-50%)}}
+  @keyframes stripes{to{background-position:22.63px 0}}
+  @keyframes hazard{to{background-position:22.63px 0}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  @keyframes pulse-dot{
+    0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,.55)}
+    50%{box-shadow:0 0 0 6px rgba(255,77,77,0)}
+  }
+  @keyframes float-wrench{
+    0%,100%{transform:rotate(-9deg) translateY(0)}
+    50%{transform:rotate(-6deg) translateY(-9px)}
+  }
+  @keyframes float-cone{
+    0%,100%{transform:rotate(7deg) translateY(0)}
+    50%{transform:rotate(4deg) translateY(-8px)}
+  }
+  @keyframes pop{
+    0%{transform:scale(1)}
+    45%{transform:scale(1.12)}
+    100%{transform:scale(1)}
+  }
+  @keyframes spark{
+    0%{transform:translate(-50%,-50%) rotate(0) scale(1);opacity:1}
+    100%{
+      transform:translate(calc(-50% + var(--tx,0px)),calc(-50% + var(--ty,0px))) rotate(var(--rot,90deg)) scale(.6);
+      opacity:0;
+    }
+  }
+
+  /* ============================================================
+     9. RESPONSIVE
+     ============================================================ */
+  @media (max-width:960px){
+    .hero{grid-template-columns:1fr;gap:48px;padding-block:44px 90px}
+    .hero-art{max-width:560px;width:100%;margin-inline:auto}
+    .panel{grid-template-columns:1fr}
+    .panel-left{border-right:0;border-bottom:4px solid var(--ink)}
+    .work-grid{grid-template-columns:repeat(3,1fr);gap:18px}
+    .wc-num{font-size:34px}
+  }
+  @media (max-width:820px){
+    .work-grid{grid-template-columns:1fr}
+    .work-card{max-width:none}
+    .sec-head{flex-direction:column;align-items:flex-start}
+    .sec-head > p{max-width:52ch}
+  }
+  @media (max-width:600px){
+    .wrap{width:calc(100% - 28px)}
+    .hero{padding-block:40px 62px}
+    .ticker-group{font-size:11px;gap:18px;padding-right:18px}
+    .hero h1{font-size:clamp(2.2rem,11vw,3.3rem)}
+    .hero-art{padding:22px 10px 38px 8px}
+    .sticker-wrench{width:52px;height:52px;font-size:23px;left:0;top:0}
+    .sticker-cone{width:56px;height:56px;font-size:26px;left:14px;bottom:-12px}
+    .soon-badge{width:110px;height:110px;right:4px;bottom:-52px}
+    .badge-core{width:44px;height:44px;font-size:19px;box-shadow:2px 2px 0 var(--ink)}
+    .term-body{font-size:11.5px;padding:15px 14px 12px}
+    .term-progress{padding:12px 14px 15px}
+    .term-live{display:none}
+    .countdown{gap:7px}
+    .cd-box{padding:10px 2px 8px;border-width:2px;box-shadow:3px 3px 0 var(--ink)}
+    .cd-box b{font-size:1.5rem}
+    .email-btn{font-size:12px}
+    .hero-stats{gap:14px 18px}
+    .hero-stats dd{font-size:12px}
+    .btn{width:100%}
+    .panel-left,.panel-right{padding:24px 20px}
+    .toast{width:calc(100% - 32px);text-align:center}
+  }
+  @media (max-width:380px){
+    .soon-badge{width:96px;height:96px}
+    .hero h1{font-size:2.35rem}
+  }
+
+  /* ============================================================
+     10. REDUCED MOTION
+     ============================================================ */
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{
+      animation-duration:.01ms!important;
+      animation-iteration-count:1!important;
+      transition-duration:.01ms!important;
+      scroll-behavior:auto!important;
+    }
+    .js .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Lewati ke konten utama</a>
+
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span>⚠ Sedang maintenance</span><span class="sep">✦</span>
+        <span>Situs lagi dibenerin</span><span class="sep">✦</span>
+        <span>Segera kembali</span><span class="sep">✦</span>
+        <span>Jangan kemana-mana</span><span class="sep">✦</span>
+        <span>Error 503: sabar</span><span class="sep">✦</span>
+      </div>
+      <div class="ticker-group">
+        <span>⚠ Sedang maintenance</span><span class="sep">✦</span>
+        <span>Situs lagi dibenerin</span><span class="sep">✦</span>
+        <span>Segera kembali</span><span class="sep">✦</span>
+        <span>Jangan kemana-mana</span><span class="sep">✦</span>
+        <span>Error 503: sabar</span><span class="sep">✦</span>
+      </div>
+    </div>
+  </div>
+  <p class="sr-only">Situs sedang dalam perbaikan dan pembaruan. Akan segera kembali.</p>
+</header>
+
+<main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <span class="status-pill reveal" style="--d:.02s">
+        <span class="dot" aria-hidden="true"></span>
+        Status: under construction
+      </span>
+
+      <h1 id="hero-title" class="reveal" style="--d:.08s">
+        Sabar ya,<br>
+        lagi <span class="mark">dibenerin</span><br>
+        dulu.
+      </h1>
+
+      <p class="lead reveal" style="--d:.14s">
+        Lagi ada upgrade kecil-kecilan di dapur digital ini. Beberapa halaman mungkin
+        berantakan, beberapa tombol mungkin ngambek. Tenang—aku sedang menambal
+        semuanya biar balik lebih rapi, lebih cepat, dan lebih enak dipakai.
+      </p>
+
+      <div class="hero-actions reveal" style="--d:.2s">
+        <a class="btn btn-primary" href="mailto:hello@alianw.my.id?subject=Halo%2C%20aku%20mau%20tanya">
+          <span aria-hidden="true">📧</span> Kabari saya
+        </a>
+        <a class="btn btn-secondary" href="#progress">
+          Lihat progress <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <dl class="hero-stats reveal" style="--d:.26s">
+        <div>
+          <dt>Progres</dt>
+          <dd><span class="count" data-to="68" data-suffix="%">68%</span></dd>
+        </div>
+        <div>
+          <dt>Update terakhir</dt>
+          <dd>2 jam lalu</dd>
+        </div>
+        <div>
+          <dt>Kondisi</dt>
+          <dd>Masih hidup</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="hero-art reveal" style="--d:.18s" data-parallax>
+      <span class="sticker sticker-wrench" aria-hidden="true">🔧</span>
+      <span class="error-chip" aria-hidden="true">ERROR 503</span>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="term-title">maintenance.sh</span>
+          <span class="term-live">LIVE</span>
+        </div>
+        <div class="term-body">
+          <p><span class="c-prompt">$</span> ./status --site</p>
+          <p class="c-out">→ status: <strong>UNDER CONTRUCTION</strong></p>
+          <p><span class="c-prompt">$</span> ./update --all</p>
+          <p class="c-out">→ desain ulang <span class="chip chip-ok">DONE</span></p>
+          <p class="c-out">→ perbaikan bug <span class="chip chip-work">IN PROGRESS</span></p>
+          <p class="c-out">→ optimasi <span class="chip chip-wait">QUEUED</span></p>
+          <p class="typed-line"><span class="c-prompt">$</span> <span id="typedCmd">coffee --refill</span><span class="caret" aria-hidden="true"></span></p>
+        </div>
+        <div class="term-progress">
+          <div class="term-progress-head">
+            <span>Progress keseluruhan</span><b>68%</b>
+          </div>
+          <div class="track">
+            <div class="fill" style="--p:68%;--c:var(--pink)"></div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="soon-badge" id="soonBadge" aria-label="Klik untuk konfeti kecil">
+        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+          <defs>
+            <path id="soonPath" d="M100,27 a73,73 0 1,1 -0.01,0"/>
+          </defs>
+          <circle cx="100" cy="100" r="95" fill="#111111"/>
+          <circle cx="100" cy="100" r="95" fill="none" stroke="#FFD93D" stroke-width="4"/>
+          <circle cx="100" cy="100" r="58" fill="none" stroke="#FFD93D" stroke-width="2" stroke-dasharray="4 6" opacity=".65"/>
+          <text fill="#FFD93D" font-family="'Space Mono',monospace" font-size="19" font-weight="700" letter-spacing="1.8">
+            <textPath href="#soonPath">DALAM PERBAIKAN ✦ SEGERA KEMBALI ✦</textPath>
+          </text>
+        </svg>
+        <span class="badge-core" aria-hidden="true">🚧</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="hazard" aria-hidden="true"></div>
+
+  <!-- ===================== PROGRESS ===================== -->
+  <section class="work wrap" id="progress" aria-labelledby="work-title">
+    <div class="sec-head">
+      <div class="reveal">
+        <span class="kicker">// 01 — Progress report</span>
+        <h2 id="work-title">Apa yang lagi<br><span class="hl hl-pink">dikerjakan?</span></h2>
+      </div>
+      <p class="reveal" style="--d:.1s">
+        Semua ini dikerjakan sambil ngopi, dan sesekali sambil menyesali
+        keputusan desain masa lalu. Ini dia daftarnya.
+      </p>
+    </div>
+
+    <div class="work-grid">
+      <article class="work-card reveal" style="--c:var(--pink);--p:85%;--d:.04s">
+        <span class="wc-num" aria-hidden="true">01</span>
+        <div class="wc-icon" aria-hidden="true">🎨</div>
+        <h3>Desain ulang</h3>
+        <p>Bikin tampilan lebih enak dilihat, lebih cepat dipahami, dan pastinya lebih rapi dari sebelumnya.</p>
+        <div class="wc-foot">
+          <span><span class="count" data-to="85" data-suffix="%">85%</span> selesai</span>
+          <span class="wc-note">Hampir kelar</span>
+        </div>
+        <div class="track" role="img" aria-label="Progres desain ulang 85 persen">
+          <div class="fill"></div>
+        </div>
+      </article>
+
+      <article class="work-card reveal" style="--c:var(--blue);--p:62%;--d:.12s">
+        <span class="wc-num" aria-hidden="true">02</span>
+        <div class="wc-icon" aria-hidden="true">🐛</div>
+        <h3>Perbaikan bug</h3>
+        <p>Memburu error yang suka sembunyi. Doakan cepat ketemu biar semuanya bisa cepat tidur.</p>
+        <div class="wc-foot">
+          <span><span class="count" data-to="62" data-suffix="%">62%</span> selesai</span>
+          <span class="wc-note">Dikejar</span>
+        </div>
+        <div class="track" role="img" aria-label="Progres perbaikan bug 62 persen">
+          <div class="fill"></div>
+        </div>
+      </article>
+
+      <article class="work-card reveal" style="--c:var(--lime);--p:40%;--d:.2s">
+        <span class="wc-num" aria-hidden="true">03</span>
+        <div class="wc-icon" aria-hidden="true">⚡</div>
+        <h3>Optimasi &amp; update</h3>
+        <p>Update konten, kecepatan, dan keamanan. Biar nanti pas dibuka rasanya ngebut, bukan ngelag.</p>
+        <div class="wc-foot">
+          <span><span class="count" data-to="40" data-suffix="%">40%</span> selesai</span>
+          <span class="wc-note">Antrean</span>
+        </div>
+        <div class="track" role="img" aria-label="Progres optimasi dan update 40 persen">
+          <div class="fill"></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== COUNTDOWN + KONTAK ===================== -->
+  <section class="panel-section wrap" aria-labelledby="when-title">
+    <div class="panel reveal">
+      <div class="panel-left">
+        <span class="kicker">// 02 — Timeline</span>
+        <h2 id="when-title">Hitung mundur<br>sampai rilis.</h2>
+
+        <div class="countdown" role="timer" aria-label="Hitung mundur estimasi selesai">
+          <div class="cd-box"><b id="cd-days">00</b><span>Hari</span></div>
+          <div class="cd-box"><b id="cd-hours">00</b><span>Jam</span></div>
+          <div class="cd-box"><b id="cd-mins">00</b><span>Menit</span></div>
+          <div class="cd-box"><b id="cd-secs">00</b><span>Detik</span></div>
+        </div>
+
+        <p class="panel-note" id="targetLabel">Target rilis: minggu ini, pukul 20.00 waktu lokal.</p>
+      </div>
+
+      <div class="panel-right">
+        <span class="kicker">// 03 — Kontak</span>
+        <h2>Jangan<br>kemana-mana.</h2>
+        <p>
+          Kalau ada yang urgent atau cuma mau ngobrol, kirim pesan aja—aku masih
+          online (kayaknya). Nanti kubalas begitu laptop ini selesai ngeluh.
+        </p>
+
+        <button type="button" class="email-btn" id="copyEmail" data-email="hello@alianw.my.id">
+          <span class="copy-label">hello@alianw.my.id</span>
+          <span class="copy-icon" aria-hidden="true">📋</span>
+        </button>
+        <p class="copy-hint">Klik buat nyalin email</p>
+
+        <!-- GANTI: link sosial di bawah ini -->
+        <div class="socials">
+          <a class="social" href="https://github.com/aloywen" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+          <!-- <a class="social" href="https://instagram.com/username" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a> -->
+          <a class="social" href="https://linkedin.com/in/ali-anwar-1a789321a" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a class="social" href="mailto:hello@alianw.my.id">Email <span aria-hidden="true">✉</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <p>
+      © 2026 Alianw<br>
+      <span class="muted">Dibuat sambil ngopi &amp; ngoprek.</span>
+    </p>
+    <p class="clock-wrap">
+      <span class="live-dot" aria-hidden="true"></span>
+      Waktu lokal <span id="clock">--:--:--</span>
+    </p>
+    <button class="to-top" id="toTop" type="button">Balik ke atas ↑</button>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(id){ return document.getElementById(id); };
+  var pad = function(n){ return String(n).padStart(2,'0'); };
+
+  /* ---------- Reveal on scroll ---------- */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var revealIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el){ revealIO.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- Animated percentage counters ---------- */
+  function animateCount(el){
+    var target = Number(el.getAttribute('data-to')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduceMotion) { el.textContent = target + suffix; return; }
+    var start = performance.now();
+    var duration = 1300;
+    function frame(now){
+      var p = Math.min((now - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    el.textContent = '0' + suffix;
+    requestAnimationFrame(frame);
+  }
+  var counters = document.querySelectorAll('.count');
+  if ('IntersectionObserver' in window) {
+    var countIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          countIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function(el){ countIO.observe(el); });
+  } else {
+    counters.forEach(animateCount);
+  }
+
+  /* ---------- Countdown (Minggu terdekat, 20.00) ---------- */
+  /* GANTI TANGGAL RILIS di sini. Contoh:
+     var RELEASE_DATE = new Date('2026-11-12T20:00:00+07:00');
+     Biarkan null untuk otomatis ke hari Minggu terdekat pukul 20.00. */
+  var RELEASE_DATE = null;
+
+  function nextSunday(){
+    var now = new Date();
+    var target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0);
+    var add = (7 - target.getDay()) % 7;
+    target.setDate(target.getDate() + add);
+    if (target <= now) target.setDate(target.getDate() + 7);
+    return target;
+  }
+
+  var target = (RELEASE_DATE instanceof Date && !isNaN(RELEASE_DATE)) ? RELEASE_DATE : nextSunday();
+  var cd = {
+    days: $('cd-days'), hours: $('cd-hours'), mins: $('cd-mins'), secs: $('cd-secs')
+  };
+  var label = $('targetLabel');
+  var dateText;
+  try {
+    dateText = target.toLocaleDateString('id-ID', {
+      weekday: 'long', day: 'numeric', month: 'short', year: 'numeric'
+    });
+  } catch (e) {
+    dateText = target.toDateString();
+  }
+  if (label) {
+    label.textContent = 'Target rilis: ' + dateText + ' · ' + pad(target.getHours()) + '.' + pad(target.getMinutes()) + ' waktu lokal';
+  }
+
+  var prevSec = null;
+  function tickCountdown(){
+    var diff = Math.max(0, target - new Date());
+    var total = Math.floor(diff / 1000);
+    var days = Math.floor(total / 86400);
+    var hours = Math.floor((total % 86400) / 3600);
+    var mins = Math.floor((total % 3600) / 60);
+    var secs = total % 60;
+
+    cd.days.textContent = pad(days);
+    cd.hours.textContent = pad(hours);
+    cd.mins.textContent = pad(mins);
+    cd.secs.textContent = pad(secs);
+
+    if (secs !== prevSec && !reduceMotion) {
+      var box = cd.secs.parentElement;
+      box.classList.remove('pulse');
+      void box.offsetWidth;
+      box.classList.add('pulse');
+    }
+    prevSec = secs;
+
+    if (total === 0 && label) {
+      label.textContent = 'Saatnya kembali — coba refresh halaman ini.';
+    }
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  /* ---------- Toast ---------- */
+  var toast = $('toast');
+  var toastTimer;
+  function showToast(message){
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2400);
+  }
+
+  /* ---------- Copy email ---------- */
+  var copyBtn = $('copyEmail');
+  if (copyBtn) {
+    var email = copyBtn.getAttribute('data-email');
+    var copyLabel = copyBtn.querySelector('.copy-label');
+    var restoreTimer;
+    copyBtn.addEventListener('click', function(){
+      function done(){
+        copyBtn.classList.add('copied');
+        if (copyLabel) copyLabel.textContent = 'Tersalin, makasih! ✓';
+        showToast('Email tersalin! 📋');
+        clearTimeout(restoreTimer);
+        restoreTimer = setTimeout(function(){
+          copyBtn.classList.remove('copied');
+          if (copyLabel) copyLabel.textContent = email;
+        }, 2000);
+      }
+      function fallbackCopy(){
+        var ta = document.createElement('textarea');
+        ta.value = email;
+        ta.setAttribute('readonly','');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        if (ok) done();
+        else showToast('Gagal menyalin. Email: ' + email);
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(done).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+    });
+  }
+
+  /* ---------- Typewriter terminal ---------- */
+  var typed = $('typedCmd');
+  var commands = ['coffee --refill', 'npm run fix --all', 'deploy --when-ready', 'sleep 20 && retry'];
+  if (typed) {
+    if (reduceMotion) {
+      typed.textContent = commands[0];
+    } else {
+      var cmdIndex = 0, charIndex = 0, deleting = false;
+      (function typeLoop(){
+        var word = commands[cmdIndex];
+        charIndex += deleting ? -1 : 1;
+        typed.textContent = word.slice(0, charIndex);
+        var delay = deleting ? 42 : 82;
+        if (!deleting && charIndex === word.length) {
+          deleting = true;
+          delay = 1600;
+        } else if (deleting && charIndex === 0) {
+          deleting = false;
+          cmdIndex = (cmdIndex + 1) % commands.length;
+          delay = 320;
+        }
+        setTimeout(typeLoop, delay);
+      })();
+    }
+  }
+
+  /* ---------- Parallax on hero artwork (desktop only) ---------- */
+  var art = document.querySelector('[data-parallax]');
+  var finePointer = window.matchMedia('(pointer:fine)').matches;
+  if (art && finePointer && !reduceMotion) {
+    var rafId = null;
+    art.addEventListener('pointermove', function(e){
+      var rect = art.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(function(){
+        art.style.setProperty('--mx', (x * 12).toFixed(2));
+        art.style.setProperty('--my', (y * 12).toFixed(2));
+      });
+    });
+    art.addEventListener('pointerleave', function(){
+      art.style.setProperty('--mx', 0);
+      art.style.setProperty('--my', 0);
+    });
+  }
+
+  /* ---------- Confetti on the SOON badge ---------- */
+  var badge = $('soonBadge');
+  var sparkColors = ['#FF7BAC', '#7DD3FC', '#BDF56F', '#FF9F45', '#C9B8FF'];
+  if (badge) {
+    badge.addEventListener('click', function(){
+      if (reduceMotion) {
+        showToast('Makasih sudah mampir! 🚧');
+        return;
+      }
+      for (var i = 0; i < 16; i++) {
+        var spark = document.createElement('span');
+        spark.className = 'spark';
+        var angle = Math.random() * Math.PI * 2;
+        var distance = 62 + Math.random() * 74;
+        spark.style.setProperty('--tx', (Math.cos(angle) * distance).toFixed(1) + 'px');
+        spark.style.setProperty('--ty', (Math.sin(angle) * distance).toFixed(1) + 'px');
+        spark.style.setProperty('--rot', Math.round(Math.random() * 360 - 180) + 'deg');
+        spark.style.background = sparkColors[i % sparkColors.length];
+        if (Math.random() > 0.6) spark.style.borderRadius = '0';
+        badge.appendChild(spark);
+        (function(node){
+          setTimeout(function(){ node.remove(); }, 1000);
+        })(spark);
+      }
+      showToast('Makasih sudah mampir! 🚧');
+    });
+  }
+
+  /* ---------- Local clock ---------- */
+  var clock = $('clock');
+  function tickClock(){
+    if (!clock) return;
+    var now = new Date();
+    clock.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  /* ---------- Back to top ---------- */
+  var toTop = $('toTop');
+  if (toTop) {
+    toTop.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
